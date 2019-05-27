@@ -1,5 +1,6 @@
-#pragma once
-#include <math.h>
+#ifndef SORT_H
+#define SORT_H
+ #include <math.h>
 #include <time.h>
 #include <iostream>
 #include <string>
@@ -25,8 +26,7 @@ public:
 template<class T>
 inline void Sort<T>::insertionSort()
 {
-	clock_t begin, end;
-	begin = clock();
+
 	int i, j;
 	T key;
 	// 인텍스 0은 이미 정렬된 것으로 볼 수 있다.
@@ -41,8 +41,7 @@ inline void Sort<T>::insertionSort()
 		}
 		arr[j + 1] = key;
 	}
-	end = clock();
-	cout << "수행시간 : " <<  double((end - begin)) / CLOCKS_PER_SEC << "s" << endl;
+
 }
 
 template<class T>
@@ -134,3 +133,4 @@ inline Sort<T>::~Sort()
 {
 	delete[] arr;
 }
+#endif
