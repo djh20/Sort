@@ -1,5 +1,4 @@
-#include "SortingManager.h"
-#include "Rectangle.h"
+#include "sortManager.h"
 using namespace std;
 /*
 	Á¶¿ø :
@@ -15,7 +14,5 @@ using namespace std;
 
 void main()
 {
-	SortingManager a;
-	//insertionSort(10000);
-
+	menu();
 }

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef RECT
+#define RECT
 #include <math.h>
 #include <time.h>
 #include <iostream>
@@ -21,4 +22,4 @@ public:
 	Rectangle();
 	~Rectangle();
 };
-
+#endif
