@@ -29,6 +29,14 @@ public:
 	void setDec();
 	void quickSort_Reculsive(int start, int end);
 	void exeQuickSort_Reculsive();
+	void naturalMergeSort(int l, int r);
+	void merge(int l,int m, int r);
+	void mergeSort(int l, int r);
+	void exeMergeSort();
+	void exeNaturalMergeSort();
+	void naturalMerge(int l, int r, int divide);
+		
+	
 	Sort();
 	Sort(int capacity);
 	~Sort();
@@ -37,6 +45,8 @@ public:
 template<class T>
 inline void Sort<T>::insertionSort()
 {
+	log << "=============================================" << endl;
+	cout << "정렬의 종류는 : Insertion Sort" << endl;
 	log << "정렬의 종류는 : Insertion Sort" << endl;
 	clock_t begin, end;
 	begin = clock();
@@ -98,6 +108,8 @@ void Sort<T>::incVal_sort()
 	else
 		cout << typeid(T).name() << endl;
 	cout << "테스트 값 개수 " << capacity << "개의 오름차순 배열에대한 정렬테스트를 마칩니다." << endl;
+	log << "***********************************************************************" << endl;
+	log << endl;
 	// 완료 출력
 }
 
@@ -136,6 +148,8 @@ void Sort<T>::randVal_sort()
 	else
 		cout << typeid(T).name() << endl;
 	cout << "테스트 값 개수 " << capacity << "개의 랜덤배열에대한 정렬테스트를 마칩니다." << endl;
+	log << "***********************************************************************" << endl;
+	log << endl;
 	// 완료 출력
 }
 
@@ -174,6 +188,8 @@ void Sort<T>::decVal_sort()
 	else
 		cout << typeid(T).name() << endl;
 	cout << "테스트 값 개수 " << capacity << "개의 내림차순 배열에대한 정렬테스트를 마칩니다." << endl;
+	log << "***********************************************************************" << endl;
+	log << endl;
 	// 완료 출력
 }
 
@@ -198,10 +214,15 @@ void Sort<T>::quickSort_Reculsive(int start, int end)
 		// 원소가 1개인 경우
 		return;
 	}
+
 	int pivot = start;
 	int i = pivot + 1; // 왼쪽 출발 지점 
 	int j = end; // 오른쪽 출발 지점
+	int mid = (end - start) / 2;
 	T temp;
+	if (arr[start] > arr[mid]) swap(arr[start], arr[end]);
+	if (arr[mid] > arr[end]) swap(arr[mid], arr[end]);
+	if (arr[start] > arr[mid]) swap(arr[start], arr[end]);
 
 	while (i <= j) {
 		// 포인터가 엇갈릴때까지 반복
@@ -225,16 +246,174 @@ void Sort<T>::quickSort_Reculsive(int start, int end)
 			arr[j] = temp;
 		}
 	}
+
 	// 분할 계산
 	quickSort_Reculsive(start, j - 1);
 	quickSort_Reculsive(j + 1, end);
-	cout << "실행완료";
 }
 
 template<class T>
-inline void Sort<T>::exeQuickSort_Reculsive()
+void Sort<T>::exeQuickSort_Reculsive()
 {
+	log << "=============================================" << endl;
+	log << "정렬의 종류는 : QuickSort_Reculsive" << endl;
+	cout << "정렬의 종류는 : QuickSort_Reculsive" << endl;
+	clock_t begin, end;
+	begin = clock();
 	quickSort_Reculsive(0, capacity-1);
+	end = clock();
+	log << "수행시간 : " << end - begin << "clock" << endl;
+	log << "=============================================" << endl;
+}
+
+template<class T>
+void Sort<T>::naturalMergeSort(int l, int r)
+{
+	int check_Cnt = 0;		// 2개 일때 합병
+	int first_Merge_start = 1;
+	int check_Point;
+	int sw = 0;
+	for (int i = l + 1; i <= r; i++)
+	{
+		if (arr[i - 1] > arr[i])
+		{
+			check_Cnt++;
+			sw = 1;
+			if (check_Cnt == 1)
+				check_Point = i - 1;
+		}
+		if (check_Cnt == 2)
+		{
+			naturalMerge(first_Merge_start, i - 1, check_Point);
+			check_Cnt = 0;
+			first_Merge_start = i;
+		}
+		if (i == r && check_Cnt == 1)
+			naturalMerge(first_Merge_start, i, check_Point);
+	}
+	if (sw == 1)
+		naturalMergeSort(1, capacity-1);
+}
+
+template<class T>
+void Sort<T>::merge(int l, int m, int r)
+{
+	//합병할 결과를 원래 배열로 옮기기 전에 사용할 임시 배열. 크기는 합병할 두 배열 만큼의 크기
+
+	int i = l;
+	int j = m + 1;
+	int k = l;
+	T *tempArray = new T[capacity];
+	//l -> m, m+1 -> r까지의 분리된 두 배열의 원소를 앞에서 하나씩 꺼내 비교하고 큰 값을 집어 넣는다
+	while (i <= m && j <= r) {
+		if (arr[i] < arr[j]) {
+			tempArray[k] = arr[i];
+			i++;
+			k++;
+		}
+		else {
+			tempArray[k] = arr[j];
+			j++;
+			k++;
+		}
+	}
+	// 만약에, 합병 할 두 배열 중 하나가 다 쓰이지 못했다면 그를 정리해 준다.
+	if (i > m) {
+		for (int p = j; p <= r; p++) {
+			tempArray[k] = arr[p];
+			k++;
+		}
+	}
+	else {
+		for (int p = i; p <= m; p++) {
+			tempArray[k] = arr[p];
+			k++;
+		}
+	}
+	//임시 배열에서 원래 배열의 자리로 복사한다.
+	for (int i = l; i <= r; i++) {
+		arr[i] = tempArray[i];
+	}
+
+	delete[] tempArray;
+}
+
+template<class T>
+void Sort<T>::mergeSort(int l, int r)
+{
+	if (r > l) {
+		int m = (r + l) / 2;
+		mergeSort(l, m);
+		mergeSort(m + 1, r);
+		merge(l, m, r);
+	}
+}
+
+template<class T>
+void Sort<T>::exeMergeSort()
+{
+	log << "=============================================" << endl;
+	log << "정렬의 종류는 : MergeSort(Reculsive)" << endl;
+	cout << "정렬의 종류는 : MergeSort(Reculsive)" << endl;
+	clock_t begin, end;
+	begin = clock();
+	mergeSort(0, capacity - 1);
+	end = clock();
+	log << "수행시간 : " << end - begin << "clock" << endl;
+	log << "=============================================" << endl;
+
+}
+
+template<class T>
+void Sort<T>::exeNaturalMergeSort()
+{
+	log << "=============================================" << endl;
+	log << "정렬의 종류는 : naturalMergeSort(Reculsive)" << endl;
+	cout << "정렬의 종류는 : naturalMergeSort(Reculsive)" << endl;
+	clock_t begin, end;
+	begin = clock();
+	naturalMergeSort(0, capacity - 1);
+	end = clock();
+	log << "수행시간 : " << end - begin << "clock" << endl;
+	log << "=============================================" << endl;
+}
+
+template<class T>
+void Sort<T>::naturalMerge(int l, int r, int divide)
+{
+	T *first_Arr = new T[capacity];
+	//int first_Arr[N + 1];
+	int first_Cnt = 0;
+	T *second_Arr = new T[capacity];
+	//int second_Arr[N + 1];
+	int second_Cnt = 0;
+	for (int i = l; i <= divide; i++)
+		first_Arr[++first_Cnt] = arr[i];
+	for (int i = divide + 1; i <= r; i++)
+		second_Arr[++second_Cnt] = arr[i];
+	int first_index = 1;
+	int second_index = 1;
+	int present_Position = 0;
+	for (int i = l; i < l + (first_Cnt + second_Cnt); i++)
+	{
+		arr[i] = first_Arr[first_index] > second_Arr[second_index] ? second_Arr[second_index++] : first_Arr[first_index++];
+		if (first_index == first_Cnt + 1)		// 첫번째 배열이 다 들어가서 두번째 배열만 넣어주면 되는 경우
+		{
+			for (int j = i + 1; j < l + (first_Cnt + second_Cnt); j++)
+				arr[j] = second_Arr[second_index++];
+			break;
+		}
+		else if (second_index == second_Cnt + 1)		// 두번째 배열이 다 들어가서 첫번째 배열만 넣어주면 되는 경우
+		{
+			for (int j = i + 1; j < l + (first_Cnt + second_Cnt); j++)
+				arr[j] = first_Arr[first_index++];
+			break;
+		}
+	}
+	delete[] first_Arr;
+	delete[] second_Arr;
+	first_Arr = NULL;
+	second_Arr = NULL;
 }
 
 template<class T>
@@ -254,6 +433,8 @@ inline Sort<T>::Sort(int capacity)
 	}
 	m_pFunc[0] = &Sort<T>::insertionSort;
 	m_pFunc[1] = &Sort<T>::exeQuickSort_Reculsive;
+	m_pFunc[2] = &Sort<T>::exeNaturalMergeSort;
+	m_pFunc[3] = &Sort<T>::exeMergeSort;
 	
 
 	string dataFile;
@@ -305,13 +486,6 @@ void Sort<T>::setInc() // 정렬을 통해 구현
 		}
 		arr[j + 1] = key;
 	}
-}
-
-template<>
-void Sort<string>::setInc()
-{
-	setRandom();
-	insertionSort();
 }
 
 template<>

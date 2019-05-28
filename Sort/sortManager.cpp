@@ -1,6 +1,6 @@
 #include "sortManager.h"
 #include "Sort.h"
-#define TEST_SIZE 100
+#define TEST_SIZE 10
 void menu()
 {
 	int select = 0;
