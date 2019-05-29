@@ -1,6 +1,7 @@
 #include "sortManager.h"
 #include "Sort.h"
-#define TEST_SIZE 10
+#include "CompareRaidxSort.h"
+#define TEST_SIZE 1000
 void menu()
 {
 	int select = 0;
@@ -13,24 +14,26 @@ void menu()
 		cout << "2. double(부동소수)" << endl;
 		cout << "3. string(문자열, 6자리)" << endl;
 		cout << "4. Rectangle(직사각형, 넓이를 계산해서 정렬)" << endl;
+		cout << "5. Radix Sort 시간비교" << endl;
 		cout << "-1 : 종료" << endl;
 		cout << "----------------------------------------------" << endl;
 		cin >> select;
 		switch (select)
 		{
-		case 1: sort_int<int>(); break;
-		case 2: sort_int<double>(); break;
-		case 3: sort_int<string>(); break;
-		case 4: sort_int<Rectangle>(); break;
+		case 1: sorts<int>(); break;
+		case 2: sorts<double>(); break;
+		case 3: sorts<string>(); break;
+		case 4: sorts<Rectangle>(); break;
+		case 5:  break;
 		}
 	}
 }
 
 template <typename T>
-void sort_int()
+void sorts()
 {
 	Sort<T> test(TEST_SIZE);
-	for (int i = TEST_SIZE; i <= TEST_SIZE*100 ; i*=10)
+	for (int i = TEST_SIZE; i <= TEST_SIZE*100; i*=10)
 	{
 		cout << "----------------------------------------------" << endl;
 		if (i != TEST_SIZE)
@@ -44,4 +47,9 @@ void sort_int()
 		cout << "----------------------------------------------" << endl;
 		test.decVal_sort();
 	}
+}
+void radixSort()
+{
+
+
 }

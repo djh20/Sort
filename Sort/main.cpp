@@ -1,4 +1,5 @@
 #include "sortManager.h"
+#include <string>
 using namespace std;
 /*
 	Á¶¿ø :

@@ -1,6 +1,6 @@
 #include "Rectangle.h"
 using namespace std;
-bool Rectangle::operator>(Rectangle operand)
+bool Rectangle::operator>(const Rectangle &operand) const
 {
 	if (this->getArea() > operand.getArea() == true)
 		return true;
@@ -46,7 +46,7 @@ void Rectangle::operator=(Rectangle operand)
 	this->width = operand.width;
 }
 
-int Rectangle::getArea()
+int Rectangle::getArea() const
 {
 	return height * width;
 }
