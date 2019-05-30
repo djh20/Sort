@@ -528,6 +528,7 @@ void Sort<T>::exeMergeSort()
 template<class T>
 void Sort<T>::exeNaturalMergeSort()
 {
+
 	log << "=============================================" << endl;
 	log << "정렬의 종류는 : naturalMergeSort(Reculsive)" << endl;
 	cout << "정렬의 종류는 : naturalMergeSort(Reculsive)" << endl;

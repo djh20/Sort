@@ -1,7 +1,7 @@
 #include "sortManager.h"
 #include "Sort.h"
 #include "CompareRaidxSort.h"
-#define TEST_SIZE 1000
+#define TEST_SIZE 500
 void menu()
 {
 	int select = 0;
@@ -24,7 +24,7 @@ void menu()
 		case 2: sorts<double>(); break;
 		case 3: sorts<string>(); break;
 		case 4: sorts<Rectangle>(); break;
-		case 5:  break;
+		case 5: radixSort(); break;
 		}
 	}
 }
@@ -50,6 +50,16 @@ void sorts()
 }
 void radixSort()
 {
-
+	CompareRaidxSort test(TEST_SIZE);
+	for (int i = TEST_SIZE; i <= TEST_SIZE*100; i *= 10)
+	{
+		cout << "----------------------------------------------" << endl;
+		if (i != TEST_SIZE)
+			test.resize(i);
+		test.setRand();
+		test.exeRadixSortDecimal();
+		test.radixSortHexadecimal();
+		cout << "----------------------------------------------" << endl;
+	}
 
 }
