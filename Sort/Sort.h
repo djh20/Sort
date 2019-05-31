@@ -12,8 +12,11 @@
 using namespace std;
 #define INT_RANDMAX_COEFF 6000 // rand의 최대범위가 32767인 것을 감안해 곱햇을때 int 최대 범위에 근접할수 있게 만들어주는 계수
 #define DOUBLE_DIVISOR 77777777 // 난수를 나눠줄 제수, 임의 값임의
-#define NUM_OF_FUNC 20 // 정렬 함수의 총 갯수
+#define NUM_OF_FUNC 13 // 정렬 함수의 총 갯수
 #define STRING "class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >" // string의 타입id 네임
+#define ASC_FIRST 33 // 아스키코드 특수문자 처음 : '!' 
+#define ASC_LAST 126 // 아스키코드 특수문자 마지막 : '~' 
+#define CANT_MEASURE 50000// insertion, seletion, bubble이 측정불가(시간이 너무 오래걸림)
 template <class T>
 class Sort
 {
@@ -118,13 +121,20 @@ void Sort<T>::mergeSort_NonRecursive()
 	log << "=============================================" << endl;
 }
 
-
 template<class T>
-inline void Sort<T>::insertionSort()
+void Sort<T>::insertionSort()
 {
+
 	log << "=============================================" << endl;
 	cout << "정렬의 종류는 : Insertion Sort" << endl;
 	log << "정렬의 종류는 : Insertion Sort" << endl;
+	if (capacity >= CANT_MEASURE)
+	{
+		cout << "측정불가" << endl;
+		log << "측정불가" << endl;
+		log << "=============================================" << endl;
+		return;
+	}
 	clock_t begin, end;
 	begin = clock();
 	int i, j;
@@ -147,6 +157,13 @@ void Sort<T>::selectionSort()
 	log << "=============================================" << endl;
 	log << "정렬의 종류는 : selectionSort" << endl;
 	cout << "정렬의 종류는 : selectionSort" << endl;
+	if (capacity >= CANT_MEASURE)
+	{
+		cout << "측정불가" << endl;
+		log << "측정불가" << endl;
+		log << "=============================================" << endl;
+		return;
+	}
 	clock_t begin, end;
 	begin = clock();
 
@@ -176,7 +193,7 @@ void Sort<T>::selectionSort()
 }
 
 template<class T>
-inline void Sort<T>::print()
+void Sort<T>::print()
 {
 	for (int i = 0; i < capacity; i++)
 	{
@@ -302,13 +319,6 @@ void Sort<T>::decVal_sort()
 	log << "***********************************************************************" << endl;
 	log << endl;
 	// 완료 출력
-}
-
-template<class T>
-inline void Sort<T>::setDec()
-{
-	setRandom();
-	sort(arr, arr + capacity, greater<T>());
 }
 
 template<class T>
@@ -629,12 +639,12 @@ void Sort<string>::setRandom() // 길이6
 	srand((unsigned int)time(NULL)); 
 	for (int i = 0; i < capacity; i++)
 	{
-		arr[i] = rand()%25 + 97;
-		arr[i] += rand() % 25 + 97;
-		arr[i] += rand() % 25 + 97;
-		arr[i] += rand() % 25 + 97;
-		arr[i] += rand() % 25 + 97;
-		arr[i] += rand() % 25 + 97;
+		arr[i] = 34 +rand() % 94;
+		arr[i] += 34 +rand() % 94;
+		arr[i] += 34 +rand() % 94;
+		arr[i] += 34 +rand() % 94;
+		arr[i] += 34 +rand() % 94;
+		arr[i] += 34 +rand() % 94;
 	}
 }
 
@@ -646,11 +656,107 @@ void Sort<T>::resize(int capacity)
 	arr = new T[capacity];
 }
 
-template<class T>
-void Sort<T>::setInc() // 정렬을 통해 구현
+template<>
+void Sort<int>::setInc() // 정렬을 통해 구현
 {
-	setRandom();
-	sort(arr, arr + capacity);
+	for (int i = 0; i < capacity; i++)
+	{
+		arr[i] = i;
+	}
+}
+
+template<>
+void Sort<string>::setInc() // 정렬을 통해 구현
+{
+	arr[0] = ASC_FIRST;
+	for (int i = 1; i < capacity; i++)
+	{
+			string tmpS = arr[i - 1];
+			if (tmpS.back() < ASC_LAST) 
+			{
+				char tmpC;
+				tmpC = tmpS.back();
+				tmpS.pop_back();
+				tmpS.push_back(tmpC + 1);
+				arr[i] = tmpS;
+			}
+			else
+			{
+				arr[i] = tmpS + char(ASC_FIRST);
+			}
+	}
+}
+
+template<>
+void Sort<double>::setInc() // 정렬을 통해 구현
+{
+	for (int i = 0; i < capacity; i++)
+	{
+		arr[i] = (double)i / DOUBLE_DIVISOR;
+	}
+}
+
+template<>
+void Sort<Rectangle>::setInc() // 정렬을 통해 구현
+{
+	for (int i = 0; i < capacity; i++)
+	{
+		arr[i].setHeight(i+1);
+		arr[i].setWidth(i+1);
+	}
+}
+
+template<>
+void Sort<int>::setDec()
+{
+	for (int i = 0; i < capacity; i++)
+	{
+		arr[i] = capacity - i;
+	}
+}
+
+template<>
+void Sort<double>::setDec()
+{
+	for (int i = 0; i < capacity; i++)
+	{
+		arr[i] = double((capacity - i))/DOUBLE_DIVISOR;
+	}
+}
+
+template<>
+void Sort<Rectangle>::setDec()
+{
+	for (int i = 0; i < capacity; i++)
+	{
+		for (int i = 0; i < capacity; i++)
+		{
+			arr[i].setHeight(capacity -i);
+			arr[i].setWidth(capacity - i);
+		}
+	}
+}
+
+template<>
+void Sort<string>::setDec()
+{
+	arr[capacity -1] = ASC_FIRST;
+	for (int i = capacity -2 ; i >= 0 ; i--)
+	{
+		string tmpS = arr[i + 1];
+		if (tmpS.back() < ASC_LAST)
+		{
+			char tmpC;
+			tmpC = tmpS.back();
+			tmpS.pop_back();
+			tmpS.push_back(tmpC + 1);
+			arr[i] = tmpS;
+		}
+		else
+		{
+			arr[i] = tmpS + char(ASC_FIRST);
+		}
+	}
 }
 
 template<>
@@ -825,7 +931,7 @@ void Sort<T>::exeShellSort()
 	clock_t begin, end;
 	begin = clock();
 	int i, gap;
-	for (gap = capacity / 2; gap > 0; gap = gap / 2) { // 
+	for (gap = capacity / 2; gap > 0; gap = gap / 2) { // 최초 shell 크기 : capacity/2
 		if ((gap % 2) == 0)
 			gap++; // gap을 홀수로 만든다.
 
@@ -840,10 +946,11 @@ void Sort<T>::exeShellSort()
 	log << "=============================================" << endl;
 }
 
-// gap만큼 떨어진 요소들을 삽입 정렬
-// 정렬의 범위는 first에서 last까지
+
 template<class T>
 void Sort<T>::shellSort(int first, int last, int gap) {
+	// gap만큼 떨어진 요소들을 삽입 정렬
+	// 정렬의 범위는 first에서 last까지
 	int i, j;
 	T key;
 
@@ -868,11 +975,15 @@ void Sort<T>::insertionList()
 	cout << "정렬의 종류는 : Insertion Linked List" << endl;
 	clock_t begin, end;
 	begin = clock();
-	list<T> l;
+	list<T> list;
 	for (int i = 0; i < capacity; i++) {
-		l.push_front(arr[i]);
+		list.push_front(arr[i]);
 	}
-	l.sort();
+	list.sort();
+	for (int i = 0; i < capacity; i++) {
+		arr[i] = list.front();
+		list.pop_front();
+	}
 	end = clock();
 	log << "수행시간 : " << end - begin << "clock" << endl;
 	log << "=============================================" << endl;
@@ -884,6 +995,13 @@ void Sort<T>::bubbleSort()
 {
 	log << "정렬의 종류는 : Bubble Sort" << endl;
 	cout << "정렬의 종류는 : Bubble Sort" << endl;
+	if (capacity >= CANT_MEASURE)
+	{
+		cout << "측정불가" << endl;
+		log << "측정불가" << endl;
+		log << "=============================================" << endl;
+		return;
+	}
 	clock_t begin, end;
 	begin = clock();
 	int i, j;

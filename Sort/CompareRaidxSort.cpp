@@ -148,3 +148,51 @@ void CompareRaidxSort::radixSortHexadecimal()
 	radixlog << "=============================================" << endl;
 	
 }
+
+void CompareRaidxSort::exeRadixSortHexaBitwise()
+{
+	radixlog << "=============================================" << endl;
+	radixlog << "정렬의 종류는 : radixSort(Hexa BitWise)" << endl;
+	cout << "정렬의 종류는 : radixSort(Hexa BitWise)" << endl;
+	clock_t begin, end;
+	begin = clock();
+
+	int max = arr[0];
+	for (int i = 1; i < capacity; i++) {
+		if (arr[i] > max) {
+			max = arr[i];
+		}
+	}
+	for (int shift = 0; (max >> shift) > 0; shift += 4) {
+		RadixSortHexaBitwise(shift);
+	}
+
+	end = clock();
+	radixlog << "수행시간 : " << end - begin << "clock" << endl;
+	radixlog << "=============================================" << endl;
+	print();
+}
+
+void CompareRaidxSort::RadixSortHexaBitwise(int shift)
+{
+
+	int count[16] = { 0 };
+	int *output = new int[capacity];
+	int i, last;
+
+	queue<int> container[16];
+	for (i = 0; i < capacity; i++) {
+		//++count[(a[i] >> shift) & 15];
+		container[(arr[i] >> shift) & 15].push(arr[i]);
+	}
+	int idx = 0;
+	for (int n = 0; n < 16; n++)
+	{
+		while (container[n].size() != 0)
+		{
+			arr[idx++] = container[n].front();
+			container[n].pop();
+		}
+	}
+
+}

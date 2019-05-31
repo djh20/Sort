@@ -1,7 +1,8 @@
 #include "sortManager.h"
 #include "Sort.h"
 #include "CompareRaidxSort.h"
-#define TEST_SIZE 500
+constexpr int TEST_CASE[5]{ 1000, 5000 ,10000 , 30000, 50000 };
+
 void menu()
 {
 	int select = 0;
@@ -32,14 +33,13 @@ void menu()
 template <typename T>
 void sorts()
 {
-	Sort<T> test(TEST_SIZE);
-	for (int i = TEST_SIZE; i <= TEST_SIZE*100; i*=10)
+	Sort<T> test(TEST_CASE[0]);
+	for (int i = 0; i <= 4; i++)
 	{
 		cout << "----------------------------------------------" << endl;
-		if (i != TEST_SIZE)
+		if (i != 0)
 		{
-			test.resize(i);
-			test.setRandom(); //배열을 랜덤으로 초기화해줌
+			test.resize(TEST_CASE[i]);
 		}
 		test.randVal_sort();
 		cout << "----------------------------------------------" << endl;
@@ -50,15 +50,16 @@ void sorts()
 }
 void radixSort()
 {
-	CompareRaidxSort test(TEST_SIZE);
-	for (int i = TEST_SIZE; i <= TEST_SIZE*100; i *= 10)
+	CompareRaidxSort test(TEST_CASE[0]);
+	for (int i = 0; i <= 4; i++)
 	{
 		cout << "----------------------------------------------" << endl;
-		if (i != TEST_SIZE)
-			test.resize(i);
+		if (i != 0)
+			test.resize(TEST_CASE[i]);
 		test.setRand();
 		test.exeRadixSortDecimal();
 		test.radixSortHexadecimal();
+		test.exeRadixSortHexaBitwise();
 		cout << "----------------------------------------------" << endl;
 	}
 

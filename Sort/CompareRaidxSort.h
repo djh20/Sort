@@ -15,6 +15,8 @@ public:
 	void radixSortDecimal(int maxRadix, int currentRadix);
 	void radixSortHexadecimal();
 	CompareRaidxSort(int capacity);
+	void exeRadixSortHexaBitwise();
+	void RadixSortHexaBitwise(int shift);
 	void resize(int capacity);
 	void print();
 	void setRand();
