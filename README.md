@@ -12,7 +12,7 @@
   1. Bubble Sort
   2. Heap Sort
   3. Insertion Sort
-  4. Insertion Sort – Linked List -> std::list.sort()
+  4. std::list.sort()
   5. Merge Sort - NonRecursive
   6. Merge Sort - Recursive
   7. natural Merge Sort
