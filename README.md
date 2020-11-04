@@ -1,4 +1,4 @@
-# 자료구조 - 정렬 비교분석 보고서 및 코드
+# 자료구조 - 정렬 비교 분석
 ### Stable sort
   1. Insertion Sort
   2. Merge Sort
