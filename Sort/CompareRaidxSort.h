@@ -11,15 +11,16 @@ class CompareRaidxSort
 	int capacity;
 	ofstream radixlog;
 public:
-	void exeRadixSortDecimal();
-	void radixSortDecimal(int maxRadix, int currentRadix);
-	void radixSortHexadecimal();
-	CompareRaidxSort(int capacity);
-	void exeRadixSortHexaBitwise();
-	void RadixSortHexaBitwise(int shift);
+	void radixSortHexadecimal(); // radixSort ( HexaDecimal)
+	void exeRadixSortHexaBitwise(); // RadixSort( HexaDecimal, Bitwise)
+	void RadixSortHexaBitwise(int shift); // "
+	void exeRadixSortDecimal(); // RadixSort (Decimal)
+	void radixSortDecimal(int maxRadix, int currentRadix); // "
 	void resize(int capacity);
 	void print();
 	void setRand();
+	void mergeSort_NonRecursive(); // 비교정렬 중 비교대상
+	CompareRaidxSort(int capacity);
 	~CompareRaidxSort();
 };
 

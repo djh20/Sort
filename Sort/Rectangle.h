@@ -9,7 +9,7 @@ class Rectangle
 	int height;
 	int width;
 public:
-	int getArea() const;
+	int getArea() const;  // Area
 	void setWidth(int value) { width = value; };
 	void setHeight(int value) { height = value; };
 	friend ostream& operator <<(ostream &out, Rectangle operand);

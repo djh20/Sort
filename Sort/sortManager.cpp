@@ -1,8 +1,8 @@
 #include "sortManager.h"
 #include "Sort.h"
 #include "CompareRaidxSort.h"
-constexpr int TEST_CASE[5]{ 1000, 5000 ,10000 , 30000, 50000 };
-
+constexpr int TEST_CASE[5]{500, 1000 ,5000 , 10000, 30000 }; // TestCase
+#define RADIX_TESTCASE 100000
 void menu()
 {
 	int select = 0;
@@ -50,17 +50,18 @@ void sorts()
 }
 void radixSort()
 {
-	CompareRaidxSort test(TEST_CASE[0]);
-	for (int i = 0; i <= 4; i++)
-	{
+	CompareRaidxSort test(RADIX_TESTCASE);
 		cout << "----------------------------------------------" << endl;
-		if (i != 0)
-			test.resize(TEST_CASE[i]);
-		test.setRand();
+		cout << "기수정렬과 mergeSort_NonRecursive의 수행실험을 시작합니다" << endl;
+		test.setRand(); 
 		test.exeRadixSortDecimal();
+		test.setRand(); 
 		test.radixSortHexadecimal();
+		test.setRand(); 
 		test.exeRadixSortHexaBitwise();
+		test.setRand();
+		test.mergeSort_NonRecursive();
 		cout << "----------------------------------------------" << endl;
-	}
+
 
 }
