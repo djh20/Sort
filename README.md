@@ -1,4 +1,4 @@
-# 자료구조 - 정렬 비교분석 보고서 및 
+# 자료구조 - 정렬 비교분석 보고서 및 코드
 ### Stable sort
   1. Insertion Sort
   2. Merge Sort
@@ -21,6 +21,7 @@
 ### 그래프 (예시)
   ![](https://images.velog.io/images/djh20/post/cb37e8d2-199d-480c-94c0-4653b1720316/image.png)
   
+* 해당 프로젝트는 학부 2학년에 진행된 프로젝트입니다. 물리적 환경 및 숙련도 부족으로 인하여 결과가 다를 수도 있음에 유의해주시길 바랍니다.
 
 [전체 보고서 다운로드](https://www.dropbox.com/s/pirubbxn9cqq1e3/%EC%9E%90%EB%A3%8C%EA%B5%AC%EC%A1%B0.hwp?dl=1)
   
